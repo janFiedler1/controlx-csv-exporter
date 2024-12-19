@@ -1,0 +1,62 @@
+import mariadb
+import csv
+import os
+from pathlib import Path
+
+TIME_COLUMN = "MeasuredTime"
+
+
+class Exporter:
+
+    def __init__(self):
+        pass
+
+    def connect_to_mariadb(self, host, user, password, database):
+        self.host = host
+        self.user = user
+        self.password = password
+        self.database = database
+        # try:
+        self.conn = mariadb.connect(
+            host=host,
+            user=user,
+            password=password,
+            database=database
+        )
+        # except mariadb.Error as e:
+        #     print(f"Error connecting to MariaDB database: {e}")
+
+    def get_data(self, table, start="", end=""):
+        cursor = self.conn.cursor()
+        query = "select * from `"+table+"` where "+TIME_COLUMN+" between \""+start+"\" and \""+end+"\""
+        try:
+            cursor.execute(query)
+            result = []
+            for row in cursor:
+                line = []
+                for data in row:
+                    line.append(data)
+                result.append(row)
+            return result
+        except mariadb.Error as e:
+            print(f"Error reading data:\n {e}\n{query}")
+        finally:
+            cursor.close()
+
+    def export(self, filename, location, data):
+        with open(location+filename, 'w', newline="") as csvfile:
+            writer = csv.writer(csvfile)
+            #writer.writerows(data)
+            if(data):
+                for row in data:
+                    writer.writerow(row)
+            else:
+                print("no data")
+
+    def get_file_name(self, filepath, filename):
+        n = 1
+        new_filepath = filepath+filename+".csv"
+        while (Path(new_filepath).exists):
+            n = n+1
+            new_filepath = filepath+filename+"_"+str(n)+".csv"
+        return filename+"_"+str(n)+".csv"

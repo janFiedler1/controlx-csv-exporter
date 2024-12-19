@@ -1,0 +1,12 @@
+## disable filename select
+## remove loading bar
+## remove blank space
+##CSV Export Tool
+
+CXExportTool
+yymmddhhmmss.csv by default (of start date)
+location picker
+close button
+disable button while exporting 
+export "D:/CSV Exports"
+
