@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>768</width>
-    <height>299</height>
+    <width>741</width>
+    <height>277</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -56,12 +56,15 @@
          <property name="title">
           <string/>
          </property>
-         <layout class="QFormLayout" name="formLayout">
-          <item row="1" column="0">
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <item>
            <widget class="QLabel" name="label_3">
             <property name="font">
              <font>
-              <pointsize>13</pointsize>
+              <pointsize>14</pointsize>
              </font>
             </property>
             <property name="text">
@@ -69,8 +72,21 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="1">
-           <widget class="QLineEdit" name="lineEdit_2"/>
+          <item>
+           <widget class="QLineEdit" name="lineEdit_2">
+            <property name="font">
+             <font>
+              <pointsize>13</pointsize>
+             </font>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="toolButton">
+            <property name="text">
+             <string>...</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -104,18 +120,18 @@
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>100</height>
+           <height>70</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>100</height>
+           <height>70</height>
           </size>
          </property>
          <property name="font">
           <font>
-           <pointsize>15</pointsize>
+           <pointsize>13</pointsize>
           </font>
          </property>
          <property name="alignment">
@@ -131,18 +147,18 @@
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>100</height>
+           <height>70</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>100</height>
+           <height>70</height>
           </size>
          </property>
          <property name="font">
           <font>
-           <pointsize>15</pointsize>
+           <pointsize>13</pointsize>
           </font>
          </property>
          <property name="alignment">
