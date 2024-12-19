@@ -31,7 +31,7 @@ if __name__=="__main__":
     print(ui.dateEdit.dateTime().toString("yyyy-MM-dd hh:mm:ss"))
     print(ui.dateEdit.dateTime().toString("yyyy-MM-dd")+" 00:00:00")
 
-    ui.pushButton_2.clicked.connect(lambda: exporter.export(exporter.get_file_name(ui.lineEdit_2.text(), ui.dateEdit.dateTime().toString("yyMMdd")), ui.lineEdit_2.text(), exporter.get_data(TABLE, ui.dateEdit.dateTime().toString("yyyy-MM-dd")+ " 00:00:00",ui.dateEdit_2.dateTime().toString("yyyy-MM-dd")+" 23:59:59")))
+    ui.pushButton_2.clicked.connect(lambda: exporter.export(exporter.get_file_name(ui.lineEdit_2.text(), ui.dateEdit.dateTime().toString("yyMMdd")), ui.lineEdit_2.text()+"CSV Exports\\", exporter.get_data(TABLE, ui.dateEdit.dateTime().toString("yyyy-MM-dd")+ " 00:00:00",ui.dateEdit_2.dateTime().toString("yyyy-MM-dd")+" 23:59:59")))
     
     MainWindow.show()
     sys.exit(app.exec_())

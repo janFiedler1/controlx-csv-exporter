@@ -1,7 +1,6 @@
 import mariadb
 import csv
 import os
-from pathlib import Path
 
 TIME_COLUMN = "MeasuredTime"
 
@@ -56,7 +55,10 @@ class Exporter:
     def get_file_name(self, filepath, filename):
         n = 1
         new_filepath = filepath+filename+".csv"
-        while (Path(new_filepath).exists):
+        while (self.path_exists(new_filepath)):
             n = n+1
             new_filepath = filepath+filename+"_"+str(n)+".csv"
         return filename+"_"+str(n)+".csv"
+    
+    def path_exists(self, path):
+        return os.path.exists(path)
