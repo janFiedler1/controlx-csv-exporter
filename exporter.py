@@ -1,6 +1,7 @@
 import mariadb
 import csv
 import os
+import time
 
 TIME_COLUMN = "MeasuredTime"
 
@@ -42,7 +43,9 @@ class Exporter:
         finally:
             cursor.close()
 
-    def export(self, filename, location, data):
+    def export(self, ui, filename, location, data):
+        ui.pushButton_2.setDisabled(True)
+        ui.pushButton_2.setText("Exporting...")
         with open(location+filename, 'w', newline="") as csvfile:
             writer = csv.writer(csvfile)
             #writer.writerows(data)
@@ -51,14 +54,19 @@ class Exporter:
                     writer.writerow(row)
             else:
                 print("no data")
+        ui.pushButton_2.setDisabled(False)
+        ui.pushButton_2.setText("Export")
 
     def get_file_name(self, filepath, filename):
-        n = 1
+        n = 0
         new_filepath = filepath+filename+".csv"
         while (self.path_exists(new_filepath)):
             n = n+1
             new_filepath = filepath+filename+"_"+str(n)+".csv"
-        return filename+"_"+str(n)+".csv"
+        extra=""
+        if(n!=0):
+            extra = "_"+str(n)
+        return filename+extra+".csv"
     
     def path_exists(self, path):
         return os.path.exists(path)
