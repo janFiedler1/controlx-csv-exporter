@@ -26,7 +26,7 @@ class Exporter:
         # except mariadb.Error as e:
         #     print(f"Error connecting to MariaDB database: {e}")
 
-    def get_data(self, table, split, start="", end=""):
+    def get_data(self, table, start="", end=""):
         cursor = self.conn.cursor()
         query = "select * from `"+table+"` where "+TIME_COLUMN+" between \""+start+"\" and \""+end+"\""
         try:

@@ -5,7 +5,7 @@
 ## CXExportTool
 ## yymmddhhmmss.csv by default (of start date)
 ## disable button while exporting 
-location picker
-close button
+## location picker
+## close button
 export "D:/CSV Exports"
 
