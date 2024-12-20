@@ -13,7 +13,7 @@ from error import ErrorMessage
 
 HOST = "localhost"
 USER = "root"
-PASSWORD = "Apples:12"
+PASSWORD = "ControlX"
 DATABASE = "cxdb"
 TABLE =  "zonemeasure"
 
