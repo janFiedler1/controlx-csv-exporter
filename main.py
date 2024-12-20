@@ -7,7 +7,8 @@ import os
 from threading import Thread
 
 from exporter import Exporter
-from pathlib import Path
+from error import ErrorMessage
+
 
 HOST = "localhost"
 USER = "root"
@@ -25,12 +26,13 @@ class Main:
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self.MainWindow)
         self.MainWindow.setWindowTitle("ControlX Export Tool")
+        
 
         self.ui.dateEdit.setDateTime(datetime.datetime.now())
         self.ui.dateEdit_2.setDateTime(datetime.datetime.now())
         self.ui.lineEdit_2.setText(os.path.dirname(os.path.abspath(__file__))+"\\")
 
-        self.ui.pushButton_2.clicked.connect(lambda: self.export_thread())
+        self.ui.pushButton_2.clicked.connect(lambda: self.export_button_clicked())
         self.ui.toolButton.clicked.connect(lambda: self.ui.lineEdit_2.setText(self.init_file_select()))
         
         self.MainWindow.show()
@@ -44,18 +46,22 @@ class Main:
 
         if file_dialog.exec():
             selected_files = file_dialog.selectedFiles()
-            return selected_files[0]+"\\"
+            return selected_files[0]+"/"
 
-    def export_button_clicked(self):
+    def export_thread(self):
         self.ui.pushButton_2.setDisabled(True)
         self.ui.pushButton_2.setText("Exporting...")
         self.exporter.export(self.exporter.get_file_name(self.ui.lineEdit_2.text(), "export_"+self.ui.dateEdit.dateTime().toString("yyMMdd")), self.ui.lineEdit_2.text(), self.exporter.get_data(TABLE, self.ui.checkBox.isChecked(), self.ui.dateEdit.dateTime().toString("yyyy-MM-dd")+ " 00:00:00",self.ui.dateEdit_2.dateTime().toString("yyyy-MM-dd")+" 23:59:59"))
         self.ui.pushButton_2.setDisabled(False)
         self.ui.pushButton_2.setText("Export")
 
-    def export_thread(self):
-        thread = Thread(target=self.export_button_clicked, name="thread1")
-        thread.start()
+    def export_button_clicked(self):
+        if(os.path.exists(self.ui.lineEdit_2.text())):
+            thread = Thread(target=self.export_thread, name="thread1")
+            thread.start()
+        else:
+            ErrorMessage("Export path does not exist").show()
+        
 
 if __name__=="__main__":
     Main()
