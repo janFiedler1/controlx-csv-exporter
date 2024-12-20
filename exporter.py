@@ -26,7 +26,7 @@ class Exporter:
         # except mariadb.Error as e:
         #     print(f"Error connecting to MariaDB database: {e}")
 
-    def get_data(self, table, start="", end=""):
+    def get_data(self, table, split, start="", end=""):
         cursor = self.conn.cursor()
         query = "select * from `"+table+"` where "+TIME_COLUMN+" between \""+start+"\" and \""+end+"\""
         try:
@@ -43,9 +43,7 @@ class Exporter:
         finally:
             cursor.close()
 
-    def export(self, ui, filename, location, data):
-        ui.pushButton_2.setDisabled(True)
-        ui.pushButton_2.setText("Exporting...")
+    def export(self, filename, location, data):
         with open(location+filename, 'w', newline="") as csvfile:
             writer = csv.writer(csvfile)
             #writer.writerows(data)
@@ -54,8 +52,6 @@ class Exporter:
                     writer.writerow(row)
             else:
                 print("no data")
-        ui.pushButton_2.setDisabled(False)
-        ui.pushButton_2.setText("Export")
 
     def get_file_name(self, filepath, filename):
         n = 0

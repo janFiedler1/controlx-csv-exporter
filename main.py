@@ -30,19 +30,30 @@ class Main:
         self.ui.dateEdit_2.setDateTime(datetime.datetime.now())
         self.ui.lineEdit_2.setText(os.path.dirname(os.path.abspath(__file__))+"\\")
 
-        self.ui.pushButton_2.clicked.connect(lambda: self.createThread())
+        self.ui.pushButton_2.clicked.connect(lambda: self.export_thread())
+        self.ui.toolButton.clicked.connect(lambda: self.ui.lineEdit_2.setText(self.init_file_select()))
         
         self.MainWindow.show()
         sys.exit(self.app.exec_())
 
-    def export_button_clicked(self):
-        self.ui.pushButton_3.setDisabled(True)
-        self.ui.pushButton_3.setText("Exporting...")
-        self.exporter.export(self.ui, self.exporter.get_file_name(self.ui.lineEdit_2.text(), "export_"+self.ui.dateEdit.dateTime().toString("yyMMdd")), self.ui.lineEdit_2.text(), self.exporter.get_data(TABLE, self.ui.dateEdit.dateTime().toString("yyyy-MM-dd")+ " 00:00:00",self.ui.dateEdit_2.dateTime().toString("yyyy-MM-dd")+" 23:59:59"))
-        self.ui.pushButton_3.setDisabled(False)
-        self.ui.pushButton_3.setText("Export")
+    def init_file_select(self):
+        file_dialog = QtWidgets.QFileDialog()
+        file_dialog.setWindowTitle("Select Folder")
+        file_dialog.setFileMode(QtWidgets.QFileDialog.FileMode.Directory)
+        file_dialog.setViewMode(QtWidgets.QFileDialog.ViewMode.Detail)
 
-    def createThread(self):
+        if file_dialog.exec():
+            selected_files = file_dialog.selectedFiles()
+            return selected_files[0]+"\\"
+
+    def export_button_clicked(self):
+        self.ui.pushButton_2.setDisabled(True)
+        self.ui.pushButton_2.setText("Exporting...")
+        self.exporter.export(self.exporter.get_file_name(self.ui.lineEdit_2.text(), "export_"+self.ui.dateEdit.dateTime().toString("yyMMdd")), self.ui.lineEdit_2.text(), self.exporter.get_data(TABLE, self.ui.checkBox.isChecked(), self.ui.dateEdit.dateTime().toString("yyyy-MM-dd")+ " 00:00:00",self.ui.dateEdit_2.dateTime().toString("yyyy-MM-dd")+" 23:59:59"))
+        self.ui.pushButton_2.setDisabled(False)
+        self.ui.pushButton_2.setText("Export")
+
+    def export_thread(self):
         thread = Thread(target=self.export_button_clicked, name="thread1")
         thread.start()
 
